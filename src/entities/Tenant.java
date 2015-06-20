@@ -1,9 +1,13 @@
+package entities;
 
 public class Tenant {
-	private String name = null;
-	private String phone = null;
-	private String email = null;
+	private String name;
+	private String phone;
+	private String email;
 	
+	public Tenant(){
+		
+	}
 	public Tenant (String name, String phone, String email){
 		this.name = name;
 		this.phone = phone;

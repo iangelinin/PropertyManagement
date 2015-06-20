@@ -1,17 +1,14 @@
+package entities;
 
 public class Payment {
 	private int propertyId;
-	private String date = null;
-	private String comment = null;
-	private Double amount = null;
-	private String payer = null;
+	private String date;
+	private String comment;
+	private double amount;
+	private String payer;
 	
-	public Payment(int propertyId, String date, Double amount, String comment, String payer){
-		this.payer = payer;
-		this.propertyId = propertyId;
-		this.date = date;
-		this.amount = amount;
-		this.comment = comment;
+	public Payment (){
+		
 	}
 	public int getPropertyId(){
 		return this.propertyId;
@@ -43,4 +40,5 @@ public class Payment {
 	public void setPayer(String payer){
 		this.payer = payer;
 	}
+	
 }

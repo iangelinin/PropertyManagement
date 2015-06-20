@@ -9,6 +9,7 @@ app.controller("Controller",function($scope,$http){
         $scope.currentProperty = newCurrentProperty;
     }
     $scope.setCurrentProperty = setCurrentProperty;
+    $scope.currentProperty = null;
 
     //$scope.currentProperty =  {"property":{"propertyId":0,"propertyName":"Property One","address":"Example street 15","rent":567.56,"isRented":"true"},tenant:{"tenantName":"Jhon Doe","telephone":"+359884738928","email":"j.doe@gde.bg"}};
     /*$scope.payments = [
@@ -78,7 +79,7 @@ app.controller("Controller",function($scope,$http){
         {"propertyId":4,"date":"23/11/2015","payer":"Payer","amount":2000.00,"comment":"comment on this payment"},
         {"propertyId":4,"date":"23/12/2015","payer":"Payer","amount":2000.00,"comment":"comment on this payment"}
     ]*/
-    $http.get("http://localhost:8080/PropMngApp/PropertyData").then(function(response){$scope.userData = response.data;
+    $http.get("http://localhost:8080/PropMngApp/PropertyREST").then(function(response){$scope.userData = response.data;
         $scope.properties = $scope.userData.properties;
         $scope.payments = $scope.userData.payments;
         $scope.currentProperty = $scope.properties[0];});

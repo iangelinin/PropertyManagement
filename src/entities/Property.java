@@ -1,22 +1,20 @@
+package entities;
 
 public class Property {
-	private Integer propertyId = null;
-	private String propertyName = null;
-	private String address = null;
-	private Double rent = null;
-	private String tenantName = null;
-	private String phone = null;
-	private String email = null;
+	private int propertyId;
+	private String propertyName;
+	private String address;
+	private double rent;
+	private Tenant tenant;
 	
 	public Property (int propertyId,String propertyName,String address, double rent,String name, String phone, String email){
 		this.propertyId = propertyId;
 		this.propertyName = propertyName;
 		this.address = address;
 		this.rent = rent;
-		this.tenantName = name;
-		this.phone = phone;
-		this.email = email;
+		
 	}
+	public Property(){}
 	public int getPropertyId(){
 		return this.propertyId;
 	}
@@ -40,23 +38,12 @@ public class Property {
 	}
 	public void setRent(double rent){
 		this.rent = rent;
-	}public String getTenantName(){
-		return this.tenantName;		
 	}
-	public String getPhone(){
-		return this.phone;
+	public Tenant getTenant() {
+		return tenant;
 	}
-	public String getEmail(){
-		return this.email;
-	}
-	public void setTenantName(String name){
-		this.tenantName = name;
-	}
-	public void setPhone(String phone){
-		this.phone = phone;
-	}
-	public void setEmail(String email){
-		this.email = email;
+	public void setTenant(Tenant tenant) {
+		this.tenant = tenant;
 	}
 	
 }
