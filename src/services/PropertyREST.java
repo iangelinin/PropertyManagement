@@ -3,14 +3,17 @@ package services;
 import com.google.gson.Gson;
 
 
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import entities.*;
 import db.*;
 
@@ -32,8 +35,10 @@ public class PropertyREST extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    private ServletsBase servBase = new ServletsBase();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("From properties");
+		PrintWriter out = response.getWriter();
 		try{
 		//Getting the data from the DB
 		PropertyManager propMng = new PropertyManager();
@@ -47,21 +52,20 @@ public class PropertyREST extends HttpServlet {
 		String json = gson.toJson(data);
 		
 		//Writing the response
-		PrintWriter out = response.getWriter();
-		response.setContentType("application/json");
-		response.addHeader("Access-Control-Allow-Origin", "*");
-	    response.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-	    response.addHeader("Access-Control-Max-Age", "3600");
-	    response.addHeader("Access-Control-Allow-Headers", "x-requested-with");
+		
+		servBase.setSuccessHeaders(response);
 	    out.println(json);
 		}
 		catch(Exception e ){
-			PrintWriter out = response.getWriter();
+			
 			response.setContentType("text/plain");
 			response.sendError(500,"Internal server error!");
 			
 			System.out.println("Internal server Error");
 			e.printStackTrace();
+		}
+		finally{
+			out.close();
 		}
 	}
 	/**

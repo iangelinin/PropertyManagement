@@ -13,7 +13,7 @@ import java.util.ArrayList;
 }
 	public ArrayList<Property> getProperties() throws SQLException{
 		try{
-		ResultSet rs = super.stmt.executeQuery("SELECT P.id_property, P.property_name, P.address, P.rent, T.tenant_name, T.telephone, T.email "
+		ResultSet rs = super.stmt.executeQuery("SELECT P.id_property, P.property_name, P.address, P.rent, T.tenant_name, T.telephone, T.email,R.id_rents,T.id_tenant "
 				+ "FROM property P, tenant T, rents R "
 				+ "WHERE R.property_id=P.id_property AND R.tenant_id = T.id_tenant;");
 		
@@ -30,12 +30,14 @@ import java.util.ArrayList;
 			tenant.setName(rs.getString(5));
 			tenant.setPhone(rs.getString(6));
 			tenant.setEmail(rs.getString(7));
+			tenant.setId(rs.getInt(9));
 		
 			//Filling the Property Object
 			prop.setPropertyId(rs.getInt(1));
 			prop.setPropertyName(rs.getString(2));
 			prop.setAddress(rs.getString(3));
 			prop.setRent(rs.getDouble(4));
+			prop.setRentsId(rs.getInt(8));
 			prop.setTenant(tenant);
 			
 			//Adding the property to the ArrayList

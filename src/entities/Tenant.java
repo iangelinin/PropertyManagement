@@ -4,6 +4,8 @@ public class Tenant {
 	private String name;
 	private String phone;
 	private String email;
+	private int id;
+	
 	
 	public Tenant(){
 		
@@ -30,5 +32,14 @@ public class Tenant {
 	}
 	public void setEmail(String email){
 		this.email = email;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String toString(){
+		return "{"+this.name+", "+this.id+", "+this.email+", "+this.phone+"}";
 	}
 }

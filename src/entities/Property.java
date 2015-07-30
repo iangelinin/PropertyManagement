@@ -5,6 +5,7 @@ public class Property {
 	private String propertyName;
 	private String address;
 	private double rent;
+	private int rentsId;
 	private Tenant tenant;
 	
 	public Property (int propertyId,String propertyName,String address, double rent,String name, String phone, String email){
@@ -12,6 +13,7 @@ public class Property {
 		this.propertyName = propertyName;
 		this.address = address;
 		this.rent = rent;
+		
 		
 	}
 	public Property(){}
@@ -44,6 +46,12 @@ public class Property {
 	}
 	public void setTenant(Tenant tenant) {
 		this.tenant = tenant;
+	}
+	public int getRentsId() {
+		return rentsId;
+	}
+	public void setRentsId(int rentsId) {
+		this.rentsId = rentsId;
 	}
 	
 }

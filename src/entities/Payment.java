@@ -1,11 +1,13 @@
 package entities;
 
 public class Payment {
+	private Integer id;
 	private int propertyId;
 	private String date;
 	private String comment;
 	private double amount;
 	private String payer;
+	private int rentsId;
 	
 	public Payment (){
 		
@@ -39,6 +41,18 @@ public class Payment {
 	}
 	public void setPayer(String payer){
 		this.payer = payer;
+	}
+	public int getRentsId() {
+		return rentsId;
+	}
+	public void setRentsId(int rentsId) {
+		this.rentsId = rentsId;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 }
