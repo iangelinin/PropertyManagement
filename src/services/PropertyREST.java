@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 
 
 
+
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -68,11 +70,67 @@ public class PropertyREST extends HttpServlet {
 			out.close();
 		}
 	}
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		
+		try {
+			
+			// Handling request
+			Property property = null;
+			Gson gson = new Gson();
+			String requestData = servBase.readRequest(request);
+			PropertyManager propMng = new PropertyManager();
+			property = gson.fromJson(requestData, Property.class);
+			// Updating
+			propMng.updateProperty(property);
+			// Responding
+			response.setContentType("aplication/json");
+			servBase.setSuccessHeaders(response);
+			response.sendError(200, "Success!");
+
+			System.out.println("Property Updated");
+		} catch (Exception e) {
+			response.setContentType("text/plain");
+			response.sendError(500, "Internal server error!");
+			System.out.println("Failed updating Tenant!");
+			e.printStackTrace();
+		} finally {
+			out.close();
+		}
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		PrintWriter out = response.getWriter();
+		try {
+			// Handling request
+			NewProperty newProperty = null;
+			Gson gson = new Gson();
+			String requestData = servBase.readRequest(request);
+			TenantManager tenantMng = new TenantManager();
+			PropertyManager propMng = new PropertyManager();
+			RentsManager rentsMng = new RentsManager();
+			newProperty = gson.fromJson(requestData, NewProperty.class);
+			// Inserting and getting the ID of the new entry
+			newProperty.setProperty(propMng.insertProperty(newProperty.getProperty()));
+			newProperty.setTenant(tenantMng.insertTenant(newProperty.getTenant()));
+			newProperty.setRentsId(rentsMng.insertRents(newProperty.getTenant(), newProperty.getProperty() ));
+			// Responding and returning the object
+			String json = gson.toJson(newProperty);
+			response.setContentType("application/json");
+			out.println(json);
+			servBase.setSuccessHeaders(response);
+
+		} catch (Exception e) {
+
+			response.setContentType("text/plain");
+			response.sendError(500, "Internal server error!");
+			System.out.println("Failed creating new payment!");
+			e.printStackTrace();
+		} finally {
+			out.close();
+		}
 	}
 
 }

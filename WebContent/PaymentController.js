@@ -3,6 +3,7 @@ angular.module('PropertyManagementApp').controller('PaymentController', ['$scope
         $scope.currentProperty = newCurrentProperty;
         $scope.isCreating = false;
         $scope.editingTenant = false;
+        $scope.editingProperty = false;
     }
     $scope.setCurrentProperty = setCurrentProperty;
     $scope.currentProperty = null;
@@ -137,11 +138,16 @@ angular.module('PropertyManagementApp').controller('PaymentController', ['$scope
     $scope.editPayment = editPayment;
     $scope.createNewPayment = createNewPayment;
     $scope.deletePayment = deletePayment;
+    
+    
+    
     //Getting the data from server
     $http.get("http://localhost:8080/PropMngApp/PropertyREST").then(function(response){$scope.userData = response.data;
         $scope.properties = $scope.userData.properties;
         $scope.payments = $scope.userData.payments.reverse();
         $scope.currentProperty = $scope.properties[0];});
+    
+    
     
     //Editting tenant
     $scope.editingTenant = false;
@@ -170,5 +176,74 @@ angular.module('PropertyManagementApp').controller('PaymentController', ['$scope
     $scope.editTenant = editTenant;
     
     
+    
+    //Editing Property
+    $scope.editingProperty = false;
+    function startEditingProperty(){
+    	$scope.editingProperty = true;
+    }
+    function isEditingProperty(){
+    	return $scope.editingProperty;
+    }
+    function editProperty(){
+    	$http.put("http://localhost:8080/PropMngApp/PropertyREST",{
+        	propertyId : $scope.currentProperty.propertyId,
+        	propertyName : $scope.currentProperty.propertyName,
+        	address : $scope.currentProperty.address,
+        	rent : $scope.currentProperty.rent}).
+        success(function(data, status, headers, config) {
+           console.log("Succsess");
+        }).error(function(data, status, headers, config) {
+            console.log("Fail"); });
+    	$scope.editingProperty = false;
+    	}
+    	$scope.startEditingProperty = startEditingProperty;
+    	$scope.isEditingProperty = isEditingProperty;
+    	$scope.editProperty = editProperty;
+    //Creating new property
+    	function startCreatingProperty(){
+    	newProperty={propertyId: '',
+    			propertyName: "",
+    			address: "",
+    			rent: '',
+    			rentsId: '',
+    			tenant: {
+    			name: "",
+    			phone: "",
+    			email: "",
+    			id: ''}	
+    	}
+    	$scope.properties.push(newProperty);
+    	setCurrentProperty(newProperty);
+    	$scope.creatingProperty = true;
+    	
+    	}
+    	$scope.startCreatingProperty = startCreatingProperty;
+    	$scope.creatingProperty = false
+    	function isCreatingProperty(){
+    		return $scope.creatingProperty;
+    	}
+    	$scope.isCreatingProperty = isCreatingProperty;
+    	function createProperty(){
+    		$http.post("http://localhost:8080/PropMngApp/PropertyREST",{
+    			property : {propertyName : $scope.currentProperty.propertyName,
+    						address : $scope.currentProperty.address,
+    						rent : $scope.currentProperty.rent},
+    			tenant:{name : $scope.currentProperty.tenant.name,
+    					phone : $scope.currentProperty.tenant.phone,
+    					email : $scope.currentProperty.tenant.email}
+    		}  	).
+            success(function(data, status, headers, config) {
+            	$scope.currentProperty.propertyId = data.property.propertyId;
+            	$scope.currentProperty.rentsId = data.rentsId;
+            	$scope.currentProperty.tenant.id = data.tenant.id;
+            	$scope.creatingProperty = false;
+               console.log("Succsess");
+            }).error(function(data, status, headers, config) {
+                console.log("Fail"); });
+    		
+    		
+    	}
+    	$scope.createProperty = createProperty;
 
 }]);

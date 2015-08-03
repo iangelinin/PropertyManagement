@@ -2,7 +2,9 @@ package db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import entities.*;
+
 import java.util.ArrayList;
 	
 	public class PropertyManager extends BaseManager {
@@ -55,6 +57,29 @@ import java.util.ArrayList;
 			super.conn.close();
 		}
 	}
+		public void updateProperty(Property property) throws SQLException{
+			try{
+				super.stmt.executeUpdate("UPDATE property SET property_name=\'"+property.getPropertyName()+"\',address=\'"+property.getAddress()+"\',rent=\'"+property.getRent()+"\'"+"  WHERE id_property=\'"+property.getPropertyId()+"\';");
+			}
+			finally {
+			conn.close();
+			}
+		}
+		public Property insertProperty(Property property) throws SQLException{
+			try{
+				super.stmt.executeUpdate("INSERT INTO property  (property_name,address,rent) VALUES (\'"+property.getPropertyName()+"\',\'"+property.getAddress()+"\',"+property.getRent()+");");
+				ResultSet rs = super.stmt.executeQuery("select last_insert_id() as last_id from property");
+				rs.next();
+				property.setPropertyId(rs.getInt(1));
+				return property;
+			}
+			finally {
+			conn.close();
+		
+			}
+			
+		}
+	
 	
 
 
