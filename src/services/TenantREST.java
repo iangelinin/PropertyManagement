@@ -19,7 +19,7 @@ import entities.Tenant;
 /**
  * Servlet implementation class TenantREST
  */
-@WebServlet("/TenantREST")
+@WebServlet("/private/TenantREST")
 public class TenantREST extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        ServletsBase servBase = new ServletsBase();

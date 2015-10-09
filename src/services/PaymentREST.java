@@ -18,7 +18,7 @@ import db.*;
 /**
  * Servlet implementation class PaymentREST
  */
-@WebServlet("/PaymentREST")
+@WebServlet("/private/PaymentREST")
 public class PaymentREST extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ServletsBase servBase = new ServletsBase();

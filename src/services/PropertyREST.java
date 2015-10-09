@@ -6,6 +6,9 @@ import com.google.gson.Gson;
 
 
 
+
+
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import entities.*;
 import db.*;
@@ -22,7 +26,7 @@ import db.*;
 /**
  * Servlet implementation class PropertyData
  */
-@WebServlet("/PropertyREST")
+@WebServlet("/private/PropertyREST")
 public class PropertyREST extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -54,7 +58,8 @@ public class PropertyREST extends HttpServlet {
 		String json = gson.toJson(data);
 		
 		//Writing the response
-		
+		HttpSession session = request.getSession();
+		session.setAttribute("user", "vane");
 		servBase.setSuccessHeaders(response);
 	    out.println(json);
 		}
@@ -74,7 +79,10 @@ public class PropertyREST extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		try {
-			
+			//Testing sessions
+			HttpSession session = request.getSession();
+			String user = (String) session.getAttribute("user");
+			System.out.println(user);
 			// Handling request
 			Property property = null;
 			Gson gson = new Gson();
