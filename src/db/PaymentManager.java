@@ -14,10 +14,10 @@ public class PaymentManager extends BaseManager{
 	public PaymentManager() throws ClassNotFoundException, SQLException {
 		super();
 	}
-	public ArrayList<Payment> getPayments() throws SQLException {
+	public ArrayList<Payment> getPayments(int id) throws SQLException {
 		try{
 		ResultSet rs = super.stmt.executeQuery("SELECT R.property_id, P.date , P.amount, P.comment, P.payer, R.id_rents, P.id_payments FROM payments P, rents R"
-				+ " WHERE R.id_rents = P.rents_id");
+				+ " WHERE R.id_rents = P.rents_id AND R.user_id = "+id+";");
 		
 		ArrayList<Payment> payments = new ArrayList<Payment>();
 		

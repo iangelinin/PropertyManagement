@@ -2,51 +2,41 @@ package services;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-
 import db.LoginManager;
-import db.PaymentManager;
-import entities.Payment;
 import entities.User;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class Register
  */
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/Register")
+public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ServletsBase servBase = new ServletsBase();
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Register() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
-	 * @see HttpServlet#HttpServlet()
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	public Login() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -57,15 +47,14 @@ public class Login extends HttpServlet {
 			String email = request.getParameter("username");
 			String password = request.getParameter("password");
 			User user = new User(email, password);
-			// Gson gson = new Gson();
-			// String requestData = servBase.readRequest(request);
+			
 			LoginManager logMg = new LoginManager();
 
 			// user = gson.fromJson(requestData, User.class);
 
 			// Checking if there exists such user and getting the ID of the user
 			System.out.println(user.getEmail() + "   " + user.getPassword());
-			user.setUser_id(logMg.checkUser(user.getEmail(), user.getPassword()));
+			user.setUser_id(logMg.insertUser(user.getEmail(), user.getPassword()));
 			if (user.getUser_id() > 0) {
 				HttpSession session = request.getSession(true); 
 				session.invalidate();
@@ -87,5 +76,4 @@ public class Login extends HttpServlet {
 			out.close();
 		}
 	}
-
 }

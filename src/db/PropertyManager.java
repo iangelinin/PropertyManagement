@@ -13,11 +13,11 @@ import java.util.ArrayList;
 	
 			super();
 }
-	public ArrayList<Property> getProperties() throws SQLException{
+	public ArrayList<Property> getProperties(int id) throws SQLException{
 		try{
 		ResultSet rs = super.stmt.executeQuery("SELECT P.id_property, P.property_name, P.address, P.rent, T.tenant_name, T.telephone, T.email,R.id_rents,T.id_tenant "
 				+ "FROM property P, tenant T, rents R "
-				+ "WHERE R.property_id=P.id_property AND R.tenant_id = T.id_tenant;");
+				+ "WHERE R.property_id=P.id_property AND R.tenant_id = T.id_tenant AND R.user_id = "+id+";");
 		
 		ArrayList<Property> properties = new ArrayList<Property>();
 		

@@ -23,5 +23,22 @@ public class LoginManager extends BaseManager{
 			conn.close();
 		}
 	}
+	public int insertUser(String email, String password) throws SQLException{
+		try{
+			int id = super.stmt.executeUpdate("INSERT INTO users  (user_email,user_password)"
+					+ " VALUES (\'"+email+"\',\'"+password+"\');");
+			ResultSet rs = super.stmt.executeQuery("select last_insert_id() as last_id from payments");
+			rs.next();
+			id = rs.getInt(1);
+			return id;
+		}
+		finally {
+		conn.close();
+	
+		}
+		
+	}
+
+
 
 }

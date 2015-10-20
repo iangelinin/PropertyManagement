@@ -44,13 +44,15 @@ public class PropertyREST extends HttpServlet {
     private ServletsBase servBase = new ServletsBase();
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("From properties");
+		int user_id = (int)request.getSession().getAttribute("user_id");
 		PrintWriter out = response.getWriter();
 		try{
+		
 		//Getting the data from the DB
 		PropertyManager propMng = new PropertyManager();
 		PaymentManager payMng = new PaymentManager();
-		ArrayList<Property> properties= propMng.getProperties();
-		ArrayList<Payment> payments = payMng.getPayments();
+		ArrayList<Property> properties= propMng.getProperties(user_id);
+		ArrayList<Payment> payments = payMng.getPayments(user_id);
 		UserData data = new UserData(properties,payments);
 		
 		//Constructing JSON 
@@ -111,8 +113,10 @@ public class PropertyREST extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		
 		try {
 			// Handling request
+			int user_id = (int)request.getSession().getAttribute("user_id");
 			NewProperty newProperty = null;
 			Gson gson = new Gson();
 			String requestData = servBase.readRequest(request);
@@ -123,7 +127,7 @@ public class PropertyREST extends HttpServlet {
 			// Inserting and getting the ID of the new entry
 			newProperty.setProperty(propMng.insertProperty(newProperty.getProperty()));
 			newProperty.setTenant(tenantMng.insertTenant(newProperty.getTenant()));
-			newProperty.setRentsId(rentsMng.insertRents(newProperty.getTenant(), newProperty.getProperty() ));
+			newProperty.setRentsId(rentsMng.insertRents(newProperty.getTenant(), newProperty.getProperty(),user_id ));
 			// Responding and returning the object
 			String json = gson.toJson(newProperty);
 			response.setContentType("application/json");

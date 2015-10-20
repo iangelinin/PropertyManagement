@@ -48,9 +48,11 @@ public class PaymentREST extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		try {
+			System.out.println("debug");
 			// Handling request
 			Payment payment = null;
 			Gson gson = new Gson();
+			int user_id = (int)request.getSession().getAttribute("user_id");
 			String requestData = servBase.readRequest(request);
 			PaymentManager paymentMng = new PaymentManager();
 			payment = gson.fromJson(requestData, Payment.class);
@@ -59,9 +61,12 @@ public class PaymentREST extends HttpServlet {
 			payment.setId(id);
 			// Responding and returning the object
 			String json = gson.toJson(payment);
-			response.setContentType("application/json");
-			out.println(json);
 			servBase.setSuccessHeaders(response);
+			response.setContentType("application/json");
+			response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+			response.addHeader("Access-Control-Allow-Origin", "*");
+			out.println(json);
+			
 
 		} catch (Exception e) {
 

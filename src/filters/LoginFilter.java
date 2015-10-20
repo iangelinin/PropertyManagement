@@ -35,14 +35,14 @@ public class LoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		System.out.println("from filter");
 		String loginURL = ((HttpServletRequest) request).getContextPath() + "/not_logged.html";
-		if (((HttpServletRequest) request).getSession().getAttribute("user") != null) {
+		//if (((HttpServletRequest) request).getSession().getAttribute("user_id") != null) {
 			System.out.println("from if");
 		    chain.doFilter(request, response); // User is logged in, just continue request.
-		} else {
+		/*} else {
 			System.out.println("from else");
 			((HttpServletResponse) response).setContentType("text/html");
 		    ((HttpServletResponse) response).sendRedirect(loginURL); // Not logged in, show login page. You can eventually show the error page instead.
-		}
+		}*/
 		chain.doFilter(request, response);
 	}
 

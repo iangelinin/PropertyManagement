@@ -18,7 +18,7 @@ public class BaseManager {
 		Class.forName("com.mysql.jdbc.Driver");
 	}
 	private Connection getConnection() throws SQLException{
-	 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/propertydb","i.angelinin","password");
+	 Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/propertydb","iangelinin","Goshe!23");
 	return conn;
 	}
 	

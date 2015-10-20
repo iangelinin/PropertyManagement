@@ -12,9 +12,9 @@ public class RentsManager extends BaseManager {
 		
 	}
 
-	public int insertRents(Tenant tenant, Property property) throws SQLException{
+	public int insertRents(Tenant tenant, Property property,int user_id) throws SQLException{
 		try{
-			super.stmt.executeUpdate("INSERT INTO  rents (property_id,tenant_id) VALUES ("+property.getPropertyId()+","+tenant.getId()+");");
+			super.stmt.executeUpdate("INSERT INTO  rents (property_id,tenant_id,user_id) VALUES ("+property.getPropertyId()+","+tenant.getId()+","+user_id+");");
 			ResultSet rs = super.stmt.executeQuery("select last_insert_id() as last_id from rents");
 			rs.next();
 			int id = rs.getInt(1);

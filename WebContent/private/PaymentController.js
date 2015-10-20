@@ -101,7 +101,7 @@ angular.module('PropertyManagementApp').controller('PaymentController', ['$scope
         
      
        
-       $http.post("http://localhost:8080/PropMngApp/privte/PaymentREST",postPayment).
+       $http.post("http://54.218.118.129:8080/PropMngApp/private/PaymentREST",postPayment).
         success(function(data, status, headers, config) {
            console.log("Succsess");
            newPayment.id = data.id;
@@ -117,7 +117,7 @@ angular.module('PropertyManagementApp').controller('PaymentController', ['$scope
 
     }
     function editPayment(payment){
-    	$http.put("http://localhost:8080/PropMngApp/private/PaymentREST",payment).
+    	$http.put("http://54.218.118.129:8080/PropMngApp/private/PaymentREST",payment).
         success(function(data, status, headers, config) {
            console.log("Succsess");
         }).error(function(data, status, headers, config) {
@@ -128,7 +128,7 @@ angular.module('PropertyManagementApp').controller('PaymentController', ['$scope
     }
     function deletePayment(payment){
     	$scope.payments.splice($scope.payments.indexOf(payment),1);
-    	$http.delete("http://localhost:8080/PropMngApp/private/PaymentREST", {params: {id: payment.id}}).
+    	$http.delete("http://54.218.118.129:8080/PropMngApp/private/PaymentREST", {params: {id: payment.id}}).
         success(function(data, status, headers, config) {
            console.log("Succsess");
         }).error(function(data, status, headers, config) {
@@ -143,7 +143,7 @@ angular.module('PropertyManagementApp').controller('PaymentController', ['$scope
     
     
     //Getting the data from server
-    $http.get("http://localhost:8080/PropMngApp/private/PropertyREST").then(function(response){$scope.userData = response.data;
+    $http.get("http://54.218.118.129:8080/PropMngApp/private/PropertyREST").then(function(response){$scope.userData = response.data;
         $scope.properties = $scope.userData.properties;
         $scope.payments = $scope.userData.payments.reverse();
         $scope.currentProperty = $scope.properties[0];});
@@ -161,7 +161,7 @@ angular.module('PropertyManagementApp').controller('PaymentController', ['$scope
     	return $scope.editingTenant;
     }
     function editTenant(){
-    	$http.put("http://localhost:8080/PropMngApp/private/TenantREST",{
+    	$http.put("http://54.218.118.129:8080/PropMngApp/private/TenantREST",{
         	id : $scope.currentProperty.tenant.id,
         	name : $scope.currentProperty.tenant.name,
         	phone : $scope.currentProperty.tenant.phone,
@@ -187,7 +187,7 @@ angular.module('PropertyManagementApp').controller('PaymentController', ['$scope
     	return $scope.editingProperty;
     }
     function editProperty(){
-    	$http.put("http://localhost:8080/PropMngApp/private/PropertyREST",{
+    	$http.put("http://54.218.118.129:8080/PropMngApp/private/PropertyREST",{
         	propertyId : $scope.currentProperty.propertyId,
         	propertyName : $scope.currentProperty.propertyName,
         	address : $scope.currentProperty.address,
@@ -226,7 +226,7 @@ angular.module('PropertyManagementApp').controller('PaymentController', ['$scope
     	}
     	$scope.isCreatingProperty = isCreatingProperty;
     	function createProperty(){
-    		$http.post("http://localhost:8080/PropMngApp/private/PropertyREST",{
+    		$http.post("http://54.218.118.129:8080/PropMngApp/private/PropertyREST",{
     			property : {propertyName : $scope.currentProperty.propertyName,
     						address : $scope.currentProperty.address,
     						rent : $scope.currentProperty.rent},
